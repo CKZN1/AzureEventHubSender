@@ -1,0 +1,17 @@
+# Replace these values with your own
+$resourceGroup="RGEventHub"
+$namespaceName="MachineEvents"
+$eventHubName="CKZNEventHub"
+
+$retentionHours=1
+$partitionCount=2
+
+# Create a resource group (if it doesn't already exist)
+az group create --name $resourceGroup --location "East US"
+
+# Create an Event Hubs namespace with a basic tier
+az eventhubs namespace create --name $namespaceName --resource-group $resourceGroup --location "East US" --sku Basic
+
+# Create an Event Hub within the namespace with a retention period and partition count
+az eventhubs eventhub create --name $eventHubName --namespace-name $namespaceName --resource-group $resourceGroup --cleanup-policy Delete --retention-time $retentionHours --partition-count $partitionCount
+
